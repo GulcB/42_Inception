@@ -1,0 +1,9 @@
+# Local environment configuration
+/srcs/.env
+
+# Credentials and local secrets
+/secrets/*
+!/secrets/.gitkeep
+
+# Editor and OS files
+.DS_Store
