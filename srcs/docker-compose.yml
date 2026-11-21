@@ -8,10 +8,22 @@ services:
       dockerfile: Dockerfile
     pull_policy: build
     restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE:?MYSQL_DATABASE is required}
+      MYSQL_USER: ${MYSQL_USER:?MYSQL_USER is required}
+    secrets:
+      - db_password
+      - db_root_password
     networks:
       - internal
     volumes:
       - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=\"$$(cat /run/secrets/db_root_password)\" mariadb --protocol=socket -u root -N -s -e 'SELECT 1' 2>/dev/null | grep -qx 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
 
 networks:
   internal:
@@ -23,3 +35,10 @@ volumes:
 
   wordpress_data:
     driver: local
+
+secrets:
+  db_password:
+    file: ../secrets/db_password.txt
+
+  db_root_password:
+    file: ../secrets/db_root_password.txt

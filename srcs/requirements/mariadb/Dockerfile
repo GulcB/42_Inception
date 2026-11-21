@@ -10,5 +10,9 @@ RUN apt-get update \
     && chown mysql:mysql /var/lib/mysql /run/mysqld
 
 COPY conf/60-inception.cnf /etc/mysql/mariadb.conf.d/60-inception.cnf
+COPY tools/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
+RUN chmod 0755 /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["mariadbd", "--user=mysql", "--console"]
