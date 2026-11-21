@@ -1,0 +1,33 @@
+name: inception
+
+services:
+  mariadb:
+    image: mariadb:inception
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    pull_policy: build
+    restart: unless-stopped
+    networks:
+      - internal
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${HOST_LOGIN:?Set HOST_LOGIN in srcs/.env}/data/mariadb
+
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/${HOST_LOGIN:?Set HOST_LOGIN in srcs/.env}/data/wordpress
