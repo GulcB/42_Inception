@@ -72,7 +72,7 @@ secrets:
   db_root_password:
     file: ../secrets/db_root_password.txt
 
-    wp_admin_password:
+  wp_admin_password:
     file: ../secrets/wp_admin_password.txt
 
   wp_user_password:
