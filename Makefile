@@ -19,7 +19,7 @@ prepare: check-env
 	@set -eu; \
 	  . ./$(ENV_FILE); \
 	  test "$${HOST_LOGIN:-}" = "$$(id -un)" || { echo "HOST_LOGIN must match the VM user"; exit 1; }; \
-	  sudo install -d -m 0755 "/home/$$HOST_LOGIN/data/mariadb" "/home/$$HOST_LOGIN/data/wordpress"
+	  sudo install -d -m 0755 "/home/$$HOST_LOGIN/data"
 
 config: check-env
 	@$(COMPOSE) config --quiet

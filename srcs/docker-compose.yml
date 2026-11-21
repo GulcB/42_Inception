@@ -20,14 +20,6 @@ networks:
 volumes:
   mariadb_data:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/${HOST_LOGIN:?Set HOST_LOGIN in srcs/.env}/data/mariadb
 
   wordpress_data:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/${HOST_LOGIN:?Set HOST_LOGIN in srcs/.env}/data/wordpress
